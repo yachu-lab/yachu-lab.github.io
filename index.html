@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>森日 Morini Café — 靜候每一杯好時光</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --parchment: #ede5d4;
+    --sand: #d4c4a8;
+    --coffee: #6b4c2a;
+    --espresso: #3d2910;
+    --warm-brown: #8b5e3c;
+    --terracotta: #c17a4a;
+    --sage: #8a9b78;
+    --fog: #b8b0a4;
+    --charcoal: #2a2420;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--espresso);
+    font-family: 'Noto Serif TC', serif;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.6;
+  }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3.5rem;
+    background: rgba(245,240,232,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(107,76,42,0.12);
+    transition: all 0.4s;
+  }
+  .nav-logo {
+    font-family: 'Zen Old Mincho', serif;
+    font-size: 1.35rem; letter-spacing: 0.22em; color: var(--coffee);
+  }
+  .nav-logo span { color: var(--terracotta); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-family: 'Noto Serif TC', serif;
+    font-size: 0.82rem; letter-spacing: 0.18em; color: var(--warm-brown);
+    position: relative; padding-bottom: 3px; transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--terracotta); transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--espresso); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-reserve {
+    padding: 0.55rem 1.4rem; border: 1px solid var(--coffee);
+    background: transparent; color: var(--coffee);
+    font-family: 'Noto Serif TC', serif; font-size: 0.8rem; letter-spacing: 0.15em;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .nav-reserve:hover { background: var(--coffee); color: var(--cream); }
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 4rem 4rem 4.5rem; position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 0.9rem; letter-spacing: 0.3em; color: var(--terracotta);
+    margin-bottom: 1.8rem; opacity: 0; animation: fadeUp 1s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Zen Old Mincho', serif; font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.1; color: var(--espresso); margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 1s 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic; font-family: 'Cormorant Garamond', serif;
+    color: var(--terracotta); font-size: 1.15em;
+  }
+  .hero-sub {
+    font-size: 0.95rem; line-height: 2; color: var(--warm-brown);
+    max-width: 380px; margin-bottom: 3rem; opacity: 0; animation: fadeUp 1s 0.7s forwards;
+  }
+  .hero-cta { display: flex; gap: 1.2rem; align-items: center; opacity: 0; animation: fadeUp 1s 0.9s forwards; }
+  .btn-primary {
+    padding: 0.85rem 2.2rem; background: var(--coffee); color: var(--cream);
+    border: none; cursor: pointer; font-family: 'Noto Serif TC', serif;
+    font-size: 0.85rem; letter-spacing: 0.18em; transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--espresso); transform: translateY(-1px); }
+  .btn-secondary {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem;
+    color: var(--warm-brown); text-decoration: none; transition: color 0.3s;
+  }
+  .btn-secondary:hover { color: var(--espresso); }
+  .btn-secondary::before { content: '→'; transition: transform 0.3s; }
+  .btn-secondary:hover::before { transform: translateX(4px); }
+  .hero-right {
+    position: relative; overflow: hidden; opacity: 0; animation: fadeIn 1.2s 0.4s forwards;
+  }
+  .hero-img-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(193,122,74,0.25) 0%, transparent 65%),
+                linear-gradient(160deg, var(--parchment) 0%, var(--sand) 100%);
+  }
+  .hero-deco-circle {
+    position: absolute; width: 420px; height: 420px; border-radius: 50%;
+    border: 1px solid rgba(107,76,42,0.15); top: 50%; left: 50%;
+    transform: translate(-50%, -50%); animation: rotateSlow 40s linear infinite;
+  }
+  .hero-deco-circle::after {
+    content: ''; position: absolute; width: 320px; height: 320px; border-radius: 50%;
+    border: 1px dashed rgba(107,76,42,0.1); top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .hero-coffee-art {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); font-size: 9rem; opacity: 0.12;
+    animation: floatY 6s ease-in-out infinite;
+  }
+  .hero-coffee-svg {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); width: 280px; height: 280px;
+  }
+  .hero-tag {
+    position: absolute; bottom: 3rem; left: 3rem;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.85rem;
+    color: var(--coffee); letter-spacing: 0.15em; writing-mode: vertical-rl;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; right: 3.5rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.72rem;
+    letter-spacing: 0.25em; color: var(--fog); text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--sand), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  /* MARQUEE */
+  .marquee-wrap { overflow: hidden; background: var(--coffee); padding: 1rem 0; }
+  .marquee-track {
+    display: flex; gap: 4rem; animation: marquee 18s linear infinite; white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem;
+    color: var(--parchment); letter-spacing: 0.2em; opacity: 0.85; flex-shrink: 0;
+  }
+  .marquee-dot { color: var(--terracotta); margin: 0 1rem; }
+  /* SECTION SHARED */
+  section { padding: 7rem 4.5rem; }
+  .section-label {
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.82rem;
+    letter-spacing: 0.35em; color: var(--terracotta); text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Zen Old Mincho', serif; font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.2; color: var(--espresso); margin-bottom: 1.5rem;
+  }
+  .divider { width: 40px; height: 1px; background: var(--terracotta); margin-bottom: 3rem; }
+  /* ABOUT */
+  .about { background: var(--parchment); }
+  .about-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: center; max-width: 1100px; margin: 0 auto;
+  }
+  .about-visual { position: relative; height: 480px; }
+  .about-rect-1 {
+    position: absolute; width: 75%; height: 80%; top: 0; left: 0;
+    background: linear-gradient(135deg, var(--sand) 0%, var(--terracotta) 100%); opacity: 0.35;
+  }
+  .about-rect-2 {
+    position: absolute; width: 65%; height: 72%; bottom: 0; right: 0;
+    background: var(--coffee); opacity: 0.2;
+  }
+  .about-center-art {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 5.5rem; color: var(--warm-brown); opacity: 0.2;
+  }
+  .about-quote {
+    position: absolute; bottom: 1.5rem; left: 0; background: var(--cream);
+    padding: 1.2rem 1.8rem; border-left: 3px solid var(--terracotta); max-width: 260px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem;
+    color: var(--coffee); line-height: 1.7;
+  }
+  .about-text p { font-size: 0.96rem; line-height: 2.1; color: var(--warm-brown); margin-bottom: 1.4rem; }
+  .about-stats {
+    display: flex; gap: 2.5rem; margin-top: 2rem; padding-top: 2rem;
+    border-top: 1px solid var(--sand);
+  }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--coffee); line-height: 1; }
+  .stat-label { font-size: 0.78rem; letter-spacing: 0.15em; color: var(--fog); margin-top: 0.3rem; }
+  /* MENU */
+  .menu { background: var(--cream); }
+  .menu-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto 3.5rem;
+  }
+  .menu-tabs { display: flex; gap: 0.3rem; }
+  .menu-tab {
+    padding: 0.45rem 1.2rem; background: none; border: 1px solid var(--sand);
+    color: var(--fog); cursor: pointer; font-family: 'Noto Serif TC', serif;
+    font-size: 0.78rem; letter-spacing: 0.12em; transition: all 0.3s;
+  }
+  .menu-tab.active, .menu-tab:hover { background: var(--coffee); border-color: var(--coffee); color: var(--cream); }
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .menu-card {
+    background: var(--parchment); padding: 2rem 1.8rem;
+    border: 1px solid rgba(107,76,42,0.1); position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;
+  }
+  .menu-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(61,41,16,0.12); }
+  .menu-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--terracotta), var(--warm-brown));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .menu-card:hover::before { transform: scaleX(1); }
+  .menu-card-emoji { font-size: 2.2rem; margin-bottom: 1rem; }
+  .menu-card-name { font-family: 'Zen Old Mincho', serif; font-size: 1.1rem; color: var(--espresso); margin-bottom: 0.4rem; }
+  .menu-card-en { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.82rem; color: var(--fog); letter-spacing: 0.12em; margin-bottom: 0.8rem; }
+  .menu-card-desc { font-size: 0.83rem; line-height: 1.8; color: var(--warm-brown); margin-bottom: 1.2rem; }
+  .menu-card-price { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--coffee); }
+  /* ATMOSPHERE */
+  .atmosphere { background: var(--espresso); color: var(--cream); padding: 6rem 4.5rem; }
+  .atm-inner { max-width: 1100px; margin: 0 auto; }
+  .atm-top { margin-bottom: 4rem; }
+  .atm-top .section-label { color: var(--terracotta); }
+  .atm-top .section-title { color: var(--parchment); }
+  .atm-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .atm-card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(245,240,232,0.08);
+    padding: 2rem 1.5rem; transition: background 0.3s;
+  }
+  .atm-card:hover { background: rgba(255,255,255,0.09); }
+  .atm-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .atm-title { font-family: 'Zen Old Mincho', serif; font-size: 1rem; margin-bottom: 0.6rem; color: var(--parchment); }
+  .atm-desc { font-size: 0.83rem; line-height: 1.9; color: var(--fog); }
+  /* RESERVE */
+  .reserve { background: var(--parchment); }
+  .reserve-inner { max-width: 750px; margin: 0 auto; text-align: center; }
+  .reserve-inner .divider { margin: 0 auto 3rem; }
+  .form-group { margin-bottom: 1.4rem; text-align: left; }
+  .form-group label { display: block; font-size: 0.78rem; letter-spacing: 0.2em; color: var(--coffee); margin-bottom: 0.5rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 0.85rem 1.1rem; background: var(--cream);
+    border: 1px solid var(--sand); color: var(--espresso);
+    font-family: 'Noto Serif TC', serif; font-size: 0.88rem; outline: none;
+    transition: border-color 0.3s; appearance: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--terracotta); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-submit {
+    width: 100%; padding: 1.1rem; background: var(--coffee); color: var(--cream);
+    border: none; cursor: pointer; font-family: 'Noto Serif TC', serif;
+    font-size: 0.9rem; letter-spacing: 0.2em; margin-top: 1rem; transition: all 0.3s;
+  }
+  .form-submit:hover { background: var(--espresso); letter-spacing: 0.28em; }
+  /* NEWS */
+  .news { background: var(--cream); }
+  .news-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto 3rem;
+  }
+  .news-more { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--terracotta); text-decoration: none; transition: color 0.3s; }
+  .news-more:hover { color: var(--coffee); }
+  .news-list { max-width: 1100px; margin: 0 auto; }
+  .news-item {
+    display: grid; grid-template-columns: 120px auto 1fr; gap: 2rem; align-items: start;
+    padding: 2rem 0; border-bottom: 1px solid var(--sand); cursor: pointer;
+  }
+  .news-item:last-child { border-bottom: none; }
+  .news-date { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: var(--fog); letter-spacing: 0.1em; padding-top: 2px; }
+  .news-tag { display: inline-block; padding: 0.2rem 0.7rem; background: var(--terracotta); color: var(--cream); font-size: 0.7rem; letter-spacing: 0.15em; white-space: nowrap; }
+  .news-title { font-family: 'Noto Serif TC', serif; font-size: 0.93rem; line-height: 1.8; color: var(--espresso); transition: color 0.3s; }
+  .news-item:hover .news-title { color: var(--terracotta); }
+  /* FOOTER */
+  footer { background: var(--charcoal); color: var(--fog); padding: 5rem 4.5rem 3rem; }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.6rem; display: block; margin-bottom: 1.2rem; }
+  .footer-brand p { font-size: 0.83rem; line-height: 2; color: rgba(184,176,164,0.6); }
+  .footer-col h4 { font-family: 'Noto Serif TC', serif; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--parchment); margin-bottom: 1.4rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; font-size: 0.82rem; line-height: 1.6; color: rgba(184,176,164,0.65); }
+  .footer-col ul li a { color: inherit; text-decoration: none; transition: color 0.3s; }
+  .footer-col ul li a:hover { color: var(--terracotta); }
+  .footer-bottom {
+    max-width: 1100px; margin: 0 auto; padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: rgba(184,176,164,0.35); letter-spacing: 0.1em;
+  }
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes rotateSlow { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+  @keyframes floatY { 0%,100% { transform: translate(-50%,-50%) translateY(0); } 50% { transform: translate(-50%,-50%) translateY(-14px); } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes scrollPulse { 0%,100% { opacity:0.4; transform:scaleY(1); } 50% { opacity:1; transform:scaleY(1.15); } }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { height: 360px; }
+    .hero-left { padding: 7rem 1.8rem 3rem; }
+    section { padding: 5rem 1.8rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .about-visual { height: 320px; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .atm-grid { grid-template-columns: 1fr 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .menu-grid { grid-template-columns: 1fr; }
+    .atm-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .news-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">森日 <span>Morini</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">關於我們</a></li>
+    <li><a href="#menu">菜單</a></li>
+    <li><a href="#atmosphere">空間</a></li>
+    <li><a href="#reserve">訂位</a></li>
+    <li><a href="#news">最新消息</a></li>
+  </ul>
+  <button class="nav-reserve" onclick="document.getElementById('reserve').scrollIntoView({behavior:'smooth'})">立即訂位</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <p class="hero-eyebrow">since 2018 · Tainan, Taiwan</p>
+    <h1 class="hero-title">靜候<br>每一杯<br><em>好時光</em></h1>
+    <p class="hero-sub">在城市的角落，我們以手工烘焙的溫度，<br>為你沏出一段屬於自己的午後。<br>森日，是你放下的地方。</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">探索菜單</button>
+      <a href="#about" class="btn-secondary">我們的故事</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-bg"></div>
+    <div class="hero-deco-circle"></div>
+    <div class="hero-coffee-art">☕</div>
+    <svg class="hero-coffee-svg" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="140" cy="140" r="100" stroke="rgba(107,76,42,0.15)" stroke-width="1"/>
+      <circle cx="140" cy="140" r="70" stroke="rgba(107,76,42,0.1)" stroke-width="1" stroke-dasharray="4 6"/>
+      <ellipse cx="140" cy="148" rx="55" ry="38" stroke="rgba(107,76,42,0.2)" stroke-width="1.5"/>
+      <path d="M 140 110 Q 155 125 140 148 Q 125 125 140 110 Z" fill="rgba(193,122,74,0.2)"/>
+      <circle cx="140" cy="140" r="8" fill="rgba(107,76,42,0.2)"/>
+      <path d="M 120 95 Q 115 82 122 72 Q 129 62 124 50" stroke="rgba(107,76,42,0.25)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M 140 90 Q 135 77 142 67 Q 149 57 144 45" stroke="rgba(107,76,42,0.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M 160 95 Q 155 82 162 72 Q 169 62 164 50" stroke="rgba(107,76,42,0.15)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M 85 160 L 90 210 Q 90 220 140 220 Q 190 220 190 210 L 195 160 Z" stroke="rgba(107,76,42,0.18)" stroke-width="1.5" fill="rgba(193,122,74,0.06)"/>
+      <ellipse cx="140" cy="160" rx="55" ry="10" stroke="rgba(107,76,42,0.18)" stroke-width="1.5" fill="rgba(193,122,74,0.1)"/>
+      <path d="M 195 175 Q 225 175 225 195 Q 225 215 195 215" stroke="rgba(107,76,42,0.2)" stroke-width="1.5" fill="none"/>
+    </svg>
+    <div class="hero-tag">手工烘焙 · 自然發酵 · 在地食材</div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">手沖單品</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">義式濃縮</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">季節甜點</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">輕食午餐</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">自家烘豆</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">包場服務</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">手沖單品</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">義式濃縮</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">季節甜點</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">輕食午餐</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">自家烘豆</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">包場服務</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-rect-1"></div>
+      <div class="about-rect-2"></div>
+      <div class="about-center-art">🌿</div>
+      <div class="about-quote">「每一粒咖啡豆，都是一段旅行的故事。」</div>
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">從一粒豆子<br>開始的夢想</h2>
+      <div class="divider"></div>
+      <p>2018年，森日在台南老城區的巷弄間悄悄誕生。創辦人阿森走過衣索比亞、哥倫比亞、瓜地馬拉的咖啡莊園，帶回的不只是豆子，更是對土地的敬意。</p>
+      <p>我們相信一杯好咖啡，是時間、溫度與用心的交織。每一批生豆親自嚴選，以中淺烘焙保留最完整的風味層次，靜靜等待你來品嘗。</p>
+      <p>在這裡，沒有急促，沒有喧囂——只有一杯屬於你的，剛剛好的時光。</p>
+      <div class="about-stats">
+        <div><div class="stat-num">6+</div><div class="stat-label">年烘焙經驗</div></div>
+        <div><div class="stat-num">18</div><div class="stat-label">精選莊園豆</div></div>
+        <div><div class="stat-num">4.9</div><div class="stat-label">Google 評分</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-header reveal">
+    <div>
+      <p class="section-label">Our Menu</p>
+      <h2 class="section-title">精選品項</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="filterMenu('all', this)">全部</button>
+      <button class="menu-tab" onclick="filterMenu('coffee', this)">咖啡</button>
+      <button class="menu-tab" onclick="filterMenu('food', this)">輕食</button>
+      <button class="menu-tab" onclick="filterMenu('dessert', this)">甜點</button>
+    </div>
+  </div>
+  <div class="menu-grid" id="menu-grid">
+    <div class="menu-card reveal" data-cat="coffee">
+      <div class="menu-card-emoji">☕</div>
+      <div class="menu-card-name">衣索比亞 日曬耶加</div>
+      <div class="menu-card-en">Ethiopia Yirgacheffe Natural</div>
+      <div class="menu-card-desc">藍莓、茉莉、柑橘尾韻，細膩的花果香氣，是入門精品咖啡的最佳選擇。</div>
+      <div class="menu-card-price">NT$ 180</div>
+    </div>
+    <div class="menu-card reveal" data-cat="coffee">
+      <div class="menu-card-emoji">🥛</div>
+      <div class="menu-card-name">森日拿鐵</div>
+      <div class="menu-card-en">Morini Signature Latte</div>
+      <div class="menu-card-desc">以自家招牌配方義式濃縮，搭配每日新鮮蒸製奶泡，醇厚圓潤。</div>
+      <div class="menu-card-price">NT$ 150</div>
+    </div>
+    <div class="menu-card reveal" data-cat="coffee">
+      <div class="menu-card-emoji">🧊</div>
+      <div class="menu-card-name">冷萃日照</div>
+      <div class="menu-card-en">Cold Brew Reserve</div>
+      <div class="menu-card-desc">低溫浸泡18小時，甜感天然，口感如絲滑，適合炎炎夏日的台南午後。</div>
+      <div class="menu-card-price">NT$ 160</div>
+    </div>
+    <div class="menu-card reveal" data-cat="food">
+      <div class="menu-card-emoji">🥣</div>
+      <div class="menu-card-name">北歐穀物早午餐</div>
+      <div class="menu-card-en">Nordic Brunch Bowl</div>
+      <div class="menu-card-desc">燕麥、奇亞籽、時令水果，搭配希臘優格與蜂蜜，清爽又飽足。</div>
+      <div class="menu-card-price">NT$ 220</div>
+    </div>
+    <div class="menu-card reveal" data-cat="food">
+      <div class="menu-card-emoji">🥐</div>
+      <div class="menu-card-name">現烤可頌三明治</div>
+      <div class="menu-card-en">Croissant Sandwich</div>
+      <div class="menu-card-desc">每日新鮮烘烤的奶油可頌，夾入燻雞、芝麻葉與番茄，酥脆迷人。</div>
+      <div class="menu-card-price">NT$ 195</div>
+    </div>
+    <div class="menu-card reveal" data-cat="dessert">
+      <div class="menu-card-emoji">🍮</div>
+      <div class="menu-card-name">焦糖咖啡布丁</div>
+      <div class="menu-card-en">Coffee Crème Caramel</div>
+      <div class="menu-card-desc">以自家耶加雪菲注入傳統法式布丁，焦糖微苦映襯滑嫩，每日限量。</div>
+      <div class="menu-card-price">NT$ 135</div>
+    </div>
+  </div>
+</section>
+
+<!-- ATMOSPHERE -->
+<section class="atmosphere" id="atmosphere">
+  <div class="atm-inner">
+    <div class="atm-top reveal">
+      <p class="section-label">Space & Vibe</p>
+      <h2 class="section-title" style="color:var(--parchment)">感受森日的空間</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="atm-grid">
+      <div class="atm-card reveal">
+        <div class="atm-icon">🪴</div>
+        <div class="atm-title">自然採光</div>
+        <div class="atm-desc">落地玻璃窗引入台南午後的暖陽，每個角落都是拍照的好位置。</div>
+      </div>
+      <div class="atm-card reveal">
+        <div class="atm-icon">📻</div>
+        <div class="atm-title">精選背景音樂</div>
+        <div class="atm-desc">Jazz、Bossa Nova 與環境聲的完美比例，讓你的思緒自在漂流。</div>
+      </div>
+      <div class="atm-card reveal">
+        <div class="atm-icon">💻</div>
+        <div class="atm-title">工作友善空間</div>
+        <div class="atm-desc">穩定高速 WiFi、充足插座，適合工作、閱讀、獨處的你。</div>
+      </div>
+      <div class="atm-card reveal">
+        <div class="atm-icon">🌙</div>
+        <div class="atm-title">包場服務</div>
+        <div class="atm-desc">提供下班後包場，適合小型聚會、讀書會或品牌活動，歡迎洽詢。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVE -->
+<section class="reserve" id="reserve">
+  <div class="reserve-inner">
+    <div class="reveal">
+      <p class="section-label">Reservation</p>
+      <h2 class="section-title">線上訂位</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label>姓名 Name</label>
+          <input type="text" placeholder="請輸入您的姓名">
+        </div>
+        <div class="form-group">
+          <label>聯絡電話 Phone</label>
+          <input type="tel" placeholder="09XX-XXX-XXX">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>到訪日期 Date</label>
+          <input type="date">
+        </div>
+        <div class="form-group">
+          <label>到訪時間 Time</label>
+          <select>
+            <option>請選擇時段</option>
+            <option>10:00</option><option>11:00</option><option>12:00</option>
+            <option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>用餐人數 Party Size</label>
+        <select>
+          <option>請選擇人數</option>
+          <option>1 位</option><option>2 位</option><option>3–4 位</option>
+          <option>5–6 位</option><option>7 位以上（請備注）</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>特殊需求 Special Request</label>
+        <textarea rows="3" placeholder="有任何特殊需求歡迎告知，例如座位偏好、慶生安排等…"></textarea>
+      </div>
+      <button class="form-submit">確認送出訂位</button>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news" id="news">
+  <div class="news-header reveal">
+    <div>
+      <p class="section-label">News & Events</p>
+      <h2 class="section-title">最新消息</h2>
+      <div class="divider"></div>
+    </div>
+    <a href="#" class="news-more">查看更多 →</a>
+  </div>
+  <div class="news-list">
+    <div class="news-item reveal">
+      <div class="news-date">2026 · 03 · 28</div>
+      <span class="news-tag">活動</span>
+      <div class="news-title">【春季品飲會】4月每週六下午，帶你認識四款非洲日曬豆的風味差異，席次有限，歡迎預約。</div>
+    </div>
+    <div class="news-item reveal">
+      <div class="news-date">2026 · 03 · 15</div>
+      <span class="news-tag">新品</span>
+      <div class="news-title">本季新推「瓜地馬拉 安地瓜 水洗」，可可、核桃、焦糖尾韻，即日起上架手沖菜單。</div>
+    </div>
+    <div class="news-item reveal">
+      <div class="news-date">2026 · 02 · 29</div>
+      <span class="news-tag">公告</span>
+      <div class="news-title">三月份營業時間調整：週一至週五 10:00–20:00，週末 09:00–21:00，請多留意。</div>
+    </div>
+    <div class="news-item reveal">
+      <div class="news-date">2026 · 02 · 14</div>
+      <span class="news-tag">活動</span>
+      <div class="news-title">情人節限定甜點「玫瑰焦糖塔」已完售，感謝大家熱情支持，下次別錯過！</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="nav-logo">森日 <span>Morini</span></span>
+      <p>台南市中西區府前路一段<br>X巷X弄X號<br><br>週一至週五 10:00 – 20:00<br>週末例假日 09:00 – 21:00</p>
+    </div>
+    <div class="footer-col">
+      <h4>導覽</h4>
+      <ul>
+        <li><a href="#about">關於我們</a></li>
+        <li><a href="#menu">菜單</a></li>
+        <li><a href="#atmosphere">空間介紹</a></li>
+        <li><a href="#reserve">線上訂位</a></li>
+        <li><a href="#news">最新消息</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>服務</h4>
+      <ul>
+        <li>包場洽詢</li><li>外燴服務</li><li>咖啡豆零售</li><li>烘焙課程</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>聯絡我們</h4>
+      <ul>
+        <li>📞 (06) 000-0000</li>
+        <li>📧 hello@morini.tw</li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 森日 Morini Café · All rights reserved</span>
+    <span>Design with ♡ in Tainan</span>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.menu-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.padding = '0.9rem 3.5rem';
+      nav.style.boxShadow = '0 2px 20px rgba(61,41,16,0.08)';
+    } else {
+      nav.style.padding = '1.4rem 3.5rem';
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
